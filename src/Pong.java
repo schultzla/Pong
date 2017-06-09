@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * Created by Logan on 6/9/2017.
+ * Created by Logan on 6/9/2017
  */
 public class Pong extends Applet implements Runnable, KeyListener {
     private static final int WIDTH = 700, HEIGHT = 500;
