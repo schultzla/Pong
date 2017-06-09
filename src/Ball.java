@@ -19,7 +19,7 @@ public class Ball {
         x = 350;
         y = 250;
         yVel = r.nextInt(3 ) + 1;
-        if(Pong.getDecision()) {
+        if(PongPanel.getDecision()) {
             xVel = 2.5;
         } else {
             xVel = -2.5;
@@ -30,11 +30,11 @@ public class Ball {
         /*
         Add in a 2 point difference to prevent cutoff
          */
-        if(x <= 50) {
+        if(x <= 45) {
             if(y >= p1.getY() - 2 && y <= p1.getY() + 82) {
                 xVel = -xVel;
             }
-        } else if (x >= 650) {
+        } else if (x >= 655) {
             if(y >= p2.getY() - 2 && y <= p2.getY() + 82) {
                 xVel = -xVel;
             }
@@ -47,7 +47,7 @@ public class Ball {
 
         if(y < 10) {
             yVel = -yVel;
-        } else if (y > Pong.getFrameHeight() - 10) {
+        } else if (y > PongPanel.getFrameHeight() - 40) {
             yVel = -yVel;
         }
     }

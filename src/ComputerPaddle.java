@@ -44,8 +44,8 @@ public class ComputerPaddle implements Paddle {
 
         if(y < 0) {
             y = 0;
-        } else if (y > Pong.getFrameHeight() - PADDLE_HEIGHT) {
-            y = Pong.getFrameHeight() - PADDLE_HEIGHT;
+        } else if (y > PongPanel.getFrameHeight() - PADDLE_HEIGHT - 30) {
+            y = PongPanel.getFrameHeight() - PADDLE_HEIGHT - 30;
         }
     }
 
