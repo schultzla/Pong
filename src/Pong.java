@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,16 +8,21 @@ import java.awt.event.KeyListener;
  */
 public class Pong extends Applet implements Runnable, KeyListener {
     private static final int WIDTH = 700, HEIGHT = 500;
-    Thread thread;
-    HumanPaddle humanPlayer;
-    Ball ball;
+    private Thread thread;
+    private HumanPaddle humanPlayer;
+    private ComputerPaddle computerPlayer;
+    private Ball ball;
+    private static Integer userScore = 0, compScore = 0;
+    private static boolean userWon;
 
     public void init() {
         setSize(WIDTH, HEIGHT);
         addKeyListener(this);
         setVisible(true);
-        humanPlayer = new HumanPaddle(1);
         ball = new Ball();
+        userWon = false;
+        computerPlayer = new ComputerPaddle(2, ball);
+        humanPlayer = new HumanPaddle(1);
         thread = new Thread(this);
         thread.start();
     }
@@ -31,23 +35,36 @@ public class Pong extends Applet implements Runnable, KeyListener {
     public void paint(Graphics g) {
         g.setColor(Color.white);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        if (ball.getX() < -10 || ball.getX() > 710) {
+        if (ball.getX() < 20) {
             g.setColor(Color.black);
-            g.drawString("Game Over", 350, 250);
+            compScore++;
+            userWon = false;
+            ball.reset();
+        } else if (ball.getX() > 660) {
+            userScore++;
+            userWon = true;
+            ball.reset();
         } else {
             humanPlayer.draw(g);
             ball.draw(g);
+            computerPlayer.draw(g);
+            g.setColor(Color.black);
+            g.drawLine(WIDTH/2, 0, WIDTH/2, 500);
+            g.drawString(userScore.toString(), WIDTH/2 - 50, 250);
+            g.drawString(compScore.toString(), WIDTH/2 + 50, 250);
         }
     }
 
     public void run() {
         while(true) {
             humanPlayer.move();
+            computerPlayer.move();
             ball.move();
+            ball.checkCollision(humanPlayer, computerPlayer);
 
             repaint();
             try {
-                Thread.sleep(10);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -83,5 +100,9 @@ public class Pong extends Applet implements Runnable, KeyListener {
 
     public static int getFrameWidth() {
         return WIDTH;
+    }
+
+    public static boolean getDecision() {
+        return userWon;
     }
 }

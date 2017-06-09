@@ -1,17 +1,21 @@
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by Logan on 6/9/2017.
  */
-public class HumanPaddle implements Paddle {
+public class ComputerPaddle implements Paddle {
+    Random r = new Random();
     private double y, yVel;
     private boolean upAccel, downAccel;
     private int player, x;
     private final double FRICTION = 0.94;
     private final int PADDLE_WIDTH = 20, PADDLE_HEIGHT = 80;
+    private Ball ball;
 
-    public HumanPaddle(int player) {
+    public ComputerPaddle(int player, Ball b) {
         upAccel = false; downAccel = false;
+        ball = b;
         y = 210; yVel = 0;
         if(player == 1) {
             x = 20;
@@ -26,20 +30,17 @@ public class HumanPaddle implements Paddle {
     }
 
 
+    public static void log(int i) {
+        System.out.println(i);
+    }
+
     public void move() {
-        if(upAccel) {
-            yVel -= 2;
-        } else if(downAccel) {
-            yVel += 2;
-        } else if (!upAccel && !downAccel) {
-            yVel *= FRICTION;
+        int dir = ball.getY() - (int)y;
+        if(dir < 0) {
+            y -= .95;
+        } else {
+            y += .95;
         }
-        if(yVel >= 2) {
-            yVel = 2;
-        } else if (yVel <= -2) {
-            yVel = -2;
-        }
-        y += yVel;
 
         if(y < 0) {
             y = 0;
@@ -47,15 +48,6 @@ public class HumanPaddle implements Paddle {
             y = Pong.getFrameHeight() - PADDLE_HEIGHT;
         }
     }
-
-    public void setUpAccel(boolean input) {
-        upAccel = input;
-    }
-
-    public void setDownAccel(boolean input) {
-        downAccel = input;
-    }
-
 
     public int getY() {
         return (int)y;
