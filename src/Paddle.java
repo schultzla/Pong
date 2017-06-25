@@ -3,9 +3,12 @@ import java.awt.*;
 /**
  * Created by Logan on 6/9/2017.
  */
-public interface Paddle {
+interface Paddle {
 
-    public void draw(Graphics g);
-    public void move();
-    public int getY();
+    void draw(Graphics g);
+    void move();
+    int getY();
+    int getX();
+    int getPdlWidth();
+    int getPdlHeight();
 }

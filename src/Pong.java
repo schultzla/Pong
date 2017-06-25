@@ -1,16 +1,18 @@
 import javax.swing.*;
 /**
  * Created by Logan on 6/9/2017
+ *
+ * Main driver for the Pong game
  */
-public class Pong extends JFrame {
+class Pong extends JFrame {
     private PongPanel panel;
 
-    public Pong() {
-        PongPanel pong = new PongPanel(this);
+    private Pong() {
+        PongPanel pong = new PongPanel();
         getContentPane().add(pong);
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(PongPanel.getFrameWidth(), PongPanel.getFrameHeight());
         setResizable(false);
         setTitle("Pong");
